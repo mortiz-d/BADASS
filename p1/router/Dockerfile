@@ -12,18 +12,9 @@ RUN sed -i \
         -e 's/^isisd=no/isisd=yes/' \
         /etc/frr/daemons
 
-
-# Config baked into the image: every container starts already configured.
-# FRR refuses to read frr.conf unless it is owned by frr:frr.
-COPY config/frr.conf /etc/frr/frr.conf
-RUN chown frr:frr /etc/frr/frr.conf && chmod 640 /etc/frr/frr.conf
-
 # Giving permision for setup
 COPY config/router-entrypoint.sh /usr/local/bin/router-entrypoint.sh
 RUN chmod 755 /usr/local/bin/router-entrypoint.sh
-
-# 179 BGP; OSPF (89) e IS-IS no usan TCP/UDP, van sobre IP/capa 2.
-EXPOSE 179/tcp
 
 # setup
 ENTRYPOINT ["/usr/local/bin/router-entrypoint.sh"]
