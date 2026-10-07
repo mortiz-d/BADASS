@@ -1,0 +1,12 @@
+LOGIN     ?= mortiz
+COUNT     ?= 3
+IMAGE     ?= p3/host-$(LOGIN)
+NAME	  ?= Dockerfile
+
+.DEFAULT_GOAL := build
+.PHONY: build
+
+build:
+	for i in $$(seq 1 $(COUNT)); do \
+		docker build -f $(NAME) -t $(IMAGE)-$$i .; \
+	done
