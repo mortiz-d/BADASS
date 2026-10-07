@@ -1,6 +1,7 @@
-LOGIN     ?= mortiz
- IMAGE     ?= p3/router-$(LOGIN)
-NAME      ?= Dockerfile
+LOGIN	?= mortiz
+COUNT	?= 4
+IMAGE	?= p3/router-$(LOGIN)
+NAME	?= Dockerfile
 
 .DEFAULT_GOAL := build
 .PHONY: build 
