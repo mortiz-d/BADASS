@@ -1,6 +1,8 @@
 #alpine brings busybox
 FROM alpine:3.20 
 
+ARG ROUTER_ID
+
 #frr(zebra descendant) brings BGPD OSPFD IS-IS inside it
 RUN apk add --no-cache "frr=~10.0" frr-pythontools 
 # iproute2 iputils tcpdump
@@ -16,6 +18,11 @@ RUN sed -i \
 COPY config/router-entrypoint.sh /usr/local/bin/router-entrypoint.sh
 RUN chmod 755 /usr/local/bin/router-entrypoint.sh
 
-# setup
+
+# Copy the corresponding frr
+COPY config/frr/R${ROUTER_ID}.conf /etc/frr/frr.conf
+
+
+# Setup
 ENTRYPOINT ["/usr/local/bin/router-entrypoint.sh"]
 CMD ["run"]
